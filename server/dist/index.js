@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
 const serverConfig_1 = require("./config/serverConfig");
-const socket_io_1 = require("socket-io");
+const socket_io_1 = require("socket.io");
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -19,6 +19,10 @@ const io = new socket_io_1.Server(server, {
     }
 });
 io.on("connection", (socket) => {
+    console.log("New User connection");
+    socket.on("disconnect", () => {
+        console.log("User Disconnected");
+    });
 });
 server.listen(serverConfig_1.PORT, () => {
     console.log(`Server is up at port ${serverConfig_1.PORT}`);
